@@ -1,0 +1,52 @@
+├── .github/
+    ├── ISSUE_TEMPLATE/
+        ├── task.md
+    ├── pull_request_template.md
+├── .gitignore
+├── README.md
+├── data/
+    ├── README.md
+    ├── processed_sample/
+        ├── .gitkeep
+    ├── raw_sample/
+        ├── forecast_sample.csv
+        ├── inventory_sample.csv
+        ├── purchase_orders_sample.csv
+        ├── sales_sample.csv
+        ├── transfers_sample.csv
+├── docs/
+    ├── 01_github_basics.md
+    ├── 02_business_context.md
+    ├── 03_data_dictionary.md
+    ├── 04_kpi_definitions.md
+    ├── 05_learning_tasks.md
+├── notebooks/
+    ├── README.md
+├── powerbi/
+    ├── README.md
+    ├── dashboard_screenshots/
+        ├── .gitkeep
+├── python/
+    ├── src/
+        ├── config.py
+        ├── data_cleaning.py
+        ├── kpi_calculations.py
+    ├── tests/
+        ├── test_kpi_calculations.py
+├── requirements.txt
+├── sql/
+    ├── 01_staging/
+        ├── stg_inventory.sql
+        ├── stg_sales.sql
+    ├── 02_dimensions/
+        ├── dim_product.sql
+        ├── dim_store.sql
+    ├── 03_facts/
+        ├── fact_forecast.sql
+        ├── fact_inventory.sql
+        ├── fact_purchase_orders.sql
+        ├── fact_sales.sql
+        ├── fact_transfers.sql
+    ├── 04_kpis/
+        ├── kpi_forecast_accuracy.sql
+        ├── kpi_sales_inventory.sql

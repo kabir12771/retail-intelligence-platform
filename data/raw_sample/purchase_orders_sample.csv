@@ -1,0 +1,3 @@
+po_no,vendor,brand,item_no,ordered_qty,received_qty,open_qty,unit_cost,open_cost_value
+PO001,Vendor A,Jacadi,ITEM001,100,70,30,45,1350
+PO002,Vendor B,Okaidi,ITEM003,200,150,50,25,1250

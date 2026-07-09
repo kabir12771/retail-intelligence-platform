@@ -1,0 +1,4 @@
+date,brand,store_code,item_no,style,season,qty,unit_price,sales_value
+2026-01-01,Jacadi,JC01,ITEM001,STY001,26S,5,120,600
+2026-01-01,Jacadi,JC02,ITEM002,STY002,26S,3,150,450
+2026-01-02,Okaidi,OK01,ITEM003,STY003,26S,8,80,640

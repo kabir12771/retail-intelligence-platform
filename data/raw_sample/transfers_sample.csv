@@ -1,0 +1,3 @@
+transfer_no,transfer_from,transfer_to,item_no,requested_transfer_qty,shipped_qty,received_qty,short_qty,excess_qty,in_transit_qty
+TR001,WH01,JC01,ITEM001,20,20,18,2,0,2
+TR002,WH01,OK01,ITEM003,30,30,32,0,2,0

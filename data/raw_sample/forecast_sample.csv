@@ -1,0 +1,4 @@
+week_start,brand,store_code,item_no,forecast_qty,actual_qty,forecast_error_qty,absolute_error_qty
+2026-01-05,Jacadi,JC01,ITEM001,12,10,-2,2
+2026-01-05,Jacadi,JC02,ITEM002,8,9,1,1
+2026-01-05,Okaidi,OK01,ITEM003,20,18,-2,2
