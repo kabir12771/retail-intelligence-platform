@@ -1,0 +1,41 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  syntax-check:
+    name: Python Syntax Check
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Show Python version
+        run: python --version
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Compile Python project
+        run: |
+          python -m compileall audit
+          python -m compileall config
+          python -m compileall extract
+          python -m compileall load
+          python -m compileall tests
+          python -m compileall utils
+          python -m compileall validate
+          python -m py_compile main.py
