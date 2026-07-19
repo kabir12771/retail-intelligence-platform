@@ -1,0 +1,199 @@
+-- ==========================================================
+-- Retail Intelligence Platform
+-- Power BI Executive Dashboard Measures
+-- Table Name Expected in Power BI: 'Executive KPI'
+-- ==========================================================
+
+
+-- =========================
+-- 1. SALES MEASURES
+-- =========================
+
+Total Net Sales =
+SUM ( 'Executive KPI'[net_sales_amount] )
+
+
+Total Sales Qty =
+SUM ( 'Executive KPI'[sales_qty] )
+
+
+Total Gross Sales =
+SUM ( 'Executive KPI'[gross_sales_amount] )
+
+
+Total Discount =
+SUM ( 'Executive KPI'[discount_amount] )
+
+
+Total VAT =
+SUM ( 'Executive KPI'[vat_amount] )
+
+
+Total Cost =
+SUM ( 'Executive KPI'[cost_amount] )
+
+
+Total Gross Margin =
+SUM ( 'Executive KPI'[gross_margin_amount] )
+
+
+Gross Margin % =
+DIVIDE ( [Total Gross Margin], [Total Net Sales], 0 )
+
+
+Average Selling Price =
+DIVIDE ( [Total Net Sales], [Total Sales Qty], 0 )
+
+
+Average Cost Per Unit =
+DIVIDE ( [Total Cost], [Total Sales Qty], 0 )
+
+
+-- =========================
+-- 2. INVENTORY MEASURES
+-- =========================
+
+Stock On Hand Qty =
+SUM ( 'Executive KPI'[stock_on_hand_qty] )
+
+
+Available Qty =
+SUM ( 'Executive KPI'[available_qty] )
+
+
+Reserved Qty =
+SUM ( 'Executive KPI'[reserved_qty] )
+
+
+In Transit Qty =
+SUM ( 'Executive KPI'[in_transit_qty] )
+
+
+On Order Qty =
+SUM ( 'Executive KPI'[on_order_qty] )
+
+
+Inventory Cost Value =
+SUM ( 'Executive KPI'[inventory_cost_value] )
+
+
+Inventory Retail Value =
+SUM ( 'Executive KPI'[inventory_retail_value] )
+
+
+Average Stock Cover Days =
+AVERAGE ( 'Executive KPI'[stock_cover_days] )
+
+
+Inventory Sellable % =
+DIVIDE ( [Available Qty], [Stock On Hand Qty], 0 )
+
+
+-- =========================
+-- 3. FORECAST MEASURES
+-- =========================
+
+Forecast Qty =
+SUM ( 'Executive KPI'[forecast_qty] )
+
+
+Actual Qty =
+SUM ( 'Executive KPI'[actual_qty] )
+
+
+Forecast Error Qty =
+[Forecast Qty] - [Actual Qty]
+
+
+Absolute Error Qty =
+SUM ( 'Executive KPI'[absolute_error_qty] )
+
+
+WAPE % =
+DIVIDE ( [Absolute Error Qty], [Actual Qty], 0 )
+
+
+Forecast Accuracy % =
+1 - [WAPE %]
+
+
+Forecast Bias % =
+DIVIDE ( [Forecast Error Qty], [Actual Qty], 0 )
+
+
+Forecast Accuracy Status =
+SWITCH (
+    TRUE (),
+    [Forecast Accuracy %] >= 0.85, "Healthy",
+    [Forecast Accuracy %] >= 0.70, "Monitor",
+    "Action Needed"
+)
+
+
+-- =========================
+-- 4. STOCK OPTIMIZATION MEASURES
+-- =========================
+
+Safety Stock Qty =
+SUM ( 'Executive KPI'[safety_stock_qty] )
+
+
+Reorder Point Qty =
+SUM ( 'Executive KPI'[reorder_point_qty] )
+
+
+Recommended Order Qty =
+SUM ( 'Executive KPI'[recommended_order_qty] )
+
+
+Average Inventory Health Score =
+AVERAGE ( 'Executive KPI'[inventory_health_score] )
+
+
+Inventory Health Status =
+SWITCH (
+    TRUE (),
+    [Average Inventory Health Score] >= 80, "Healthy",
+    [Average Inventory Health Score] >= 60, "Monitor",
+    "Action Needed"
+)
+
+
+-- =========================
+-- 5. EXECUTIVE KPI MEASURES
+-- =========================
+
+Total Business Value =
+[Total Net Sales] + [Inventory Cost Value]
+
+
+Sales to Inventory Ratio =
+DIVIDE ( [Total Net Sales], [Inventory Cost Value], 0 )
+
+
+Gross Margin Per Unit =
+DIVIDE ( [Total Gross Margin], [Total Sales Qty], 0 )
+
+
+Inventory Risk Qty =
+[Reserved Qty] + [In Transit Qty] + [On Order Qty]
+
+
+Replenishment Need % =
+DIVIDE ( [Recommended Order Qty], [Stock On Hand Qty], 0 )
+
+
+-- =========================
+-- 6. DISPLAY / TITLE MEASURES
+-- =========================
+
+Executive Dashboard Title =
+"Retail Intelligence Platform - Executive Overview"
+
+
+Executive KPI Subtitle =
+"Sales, Inventory, Forecast Accuracy and Stock Optimization"
+
+
+Data Refresh Note =
+"Data loaded from SQL Server mart.vw_executive_kpi_base"
