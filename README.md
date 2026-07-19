@@ -1,3 +1,90 @@
+﻿<!-- PORTFOLIO_HEADER_START -->
+
+<p align="center">
+  <h1 align="center">Retail Intelligence Platform</h1>
+  <p align="center">
+    End-to-End Retail Data Warehouse, Python ETL, Data Quality Validation, Audit Logging, and Power BI-Ready Analytics Platform
+  </p>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-ETL-blue" />
+  <img src="https://img.shields.io/badge/SQL%20Server-Data%20Warehouse-red" />
+  <img src="https://img.shields.io/badge/Power%20BI-Ready-yellow" />
+  <img src="https://img.shields.io/badge/Data%20Quality-Validation-green" />
+  <img src="https://img.shields.io/badge/Retail-Supply%20Chain-purple" />
+  <img src="https://img.shields.io/badge/Status-Active%20Portfolio%20Project-brightgreen" />
+</p>
+
+---
+
+## Portfolio Summary
+
+Retail Intelligence Platform is a professional, end-to-end analytics engineering project designed for fashion retail, inventory control, supply chain analytics, merchandise planning, and business intelligence.
+
+The platform simulates a real enterprise data pipeline that reads operational Excel and ERP-style files, validates data quality, loads SQL Server staging tables, executes warehouse stored procedures, and exposes Power BI-ready mart views.
+
+This project demonstrates practical skills in:
+
+- Retail analytics and supply chain reporting
+- Python ETL development
+- SQL Server data warehouse design
+- Dimensional modeling
+- Data quality validation
+- Audit logging and operational monitoring
+- Error reporting and rejected file handling
+- Power BI-ready mart view design
+- GitHub-ready project documentation
+
+---
+
+## Table of Contents
+
+- [Project Overview](#1-project-overview)
+- [Business Problem](#2-business-problem)
+- [Business Objective](#3-business-objective)
+- [High-Level Architecture](#4-high-level-architecture)
+- [Project Status](#5-project-status)
+- [Project Folder Structure](#6-project-folder-structure)
+- [SQL Server Database Design](#7-sql-server-database-design)
+- [Data Warehouse Model](#8-data-warehouse-model)
+- [ETL Pipeline Flow](#9-etl-pipeline-flow)
+- [Supported Source Files](#10-supported-source-files)
+- [Validation Framework](#11-validation-framework)
+- [Audit, Logs, and Reports](#12-audit-logs-and-reports)
+- [File Movement Logic](#13-file-movement-logic)
+- [Configuration](#14-configuration)
+- [Command-Line Arguments](#15-command-line-arguments)
+- [Setup Instructions](#16-setup-instructions)
+- [Testing Commands](#17-testing-commands)
+- [SQL Audit Queries](#18-sql-audit-queries)
+- [Mart Views for Power BI](#19-mart-views-for-power-bi)
+- [Business Metrics Supported](#20-business-metrics-supported)
+- [Portfolio Explanation](#21-portfolio-explanation)
+- [Interview Explanation](#22-interview-explanation)
+- [Future Enhancements](#23-future-enhancements)
+- [Current Progress](#24-current-progress)
+- [Author](#25-author)
+
+---
+
+## Key Capabilities
+
+| Capability | Description |
+|---|---|
+| Python ETL | Reads, validates, and loads Excel source files |
+| SQL Server Warehouse | Stores clean dimensional data using facts and dimensions |
+| Validation Framework | Checks schema, data quality, business rules, and post-load results |
+| Audit Logging | Tracks batch status, file status, row counts, and errors |
+| Error Reports | Creates Excel reports for rejected rows |
+| Run Summary Reports | Creates business-friendly Excel reports after each ETL run |
+| File Movement | Moves processed and rejected files into controlled folders |
+| Power BI-Ready Views | Provides mart views for dashboard development |
+| GitHub Documentation | Includes README, architecture notes, runbook, and interview notes |
+
+---
+
+<!-- PORTFOLIO_HEADER_END -->
 \# Retail Intelligence Platform
 
 
@@ -178,39 +265,39 @@ The objective of this project is to build a professional retail analytics platfo
 
 Excel / ERP Source Files
 
-&#x20;       ↓
+&#x20;       â†“
 
 Python ETL Pipeline
 
-&#x20;       ↓
+&#x20;       â†“
 
 Schema Validation
 
-&#x20;       ↓
+&#x20;       â†“
 
 Data Quality Validation
 
-&#x20;       ↓
+&#x20;       â†“
 
 SQL Server Staging Tables
 
-&#x20;       ↓
+&#x20;       â†“
 
 SQL Stored Procedures
 
-&#x20;       ↓
+&#x20;       â†“
 
 SQL Server Data Warehouse
 
-&#x20;       ↓
+&#x20;       â†“
 
 Mart Views
 
-&#x20;       ↓
+&#x20;       â†“
 
 Power BI Dashboards
 
-&#x20;       ↓
+&#x20;       â†“
 
 Forecasting + Inventory Optimization + AI Assistant
 
@@ -296,149 +383,149 @@ Current completed builds:
 
 Retail\_Intelligence\_Platform
 
-│
+â”‚
 
-├── 01\_database\_design
+â”œâ”€â”€ 01\_database\_design
 
-│   └── sql\_scripts
+â”‚   â””â”€â”€ sql\_scripts
 
-│
+â”‚
 
-└── 02\_python\_etl
+â””â”€â”€ 02\_python\_etl
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── audit
+&#x20;   â”œâ”€â”€ audit
 
-&#x20;   │   ├── \_\_init\_\_.py
+&#x20;   â”‚   â”œâ”€â”€ \_\_init\_\_.py
 
-&#x20;   │   └── audit\_logger.py
+&#x20;   â”‚   â””â”€â”€ audit\_logger.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── config
+&#x20;   â”œâ”€â”€ config
 
-&#x20;   │   ├── column\_mapping.py
+&#x20;   â”‚   â”œâ”€â”€ column\_mapping.py
 
-&#x20;   │   ├── database\_config.py
+&#x20;   â”‚   â”œâ”€â”€ database\_config.py
 
-&#x20;   │   ├── file\_config.py
+&#x20;   â”‚   â”œâ”€â”€ file\_config.py
 
-&#x20;   │   └── pipeline\_config.py
+&#x20;   â”‚   â””â”€â”€ pipeline\_config.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── docs
+&#x20;   â”œâ”€â”€ docs
 
-&#x20;   │   ├── ARCHITECTURE.md
+&#x20;   â”‚   â”œâ”€â”€ ARCHITECTURE.md
 
-&#x20;   │   ├── ETL\_RUNBOOK.md
+&#x20;   â”‚   â”œâ”€â”€ ETL\_RUNBOOK.md
 
-&#x20;   │   └── INTERVIEW\_NOTES.md
+&#x20;   â”‚   â””â”€â”€ INTERVIEW\_NOTES.md
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── error\_reports
+&#x20;   â”œâ”€â”€ error\_reports
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── extract
+&#x20;   â”œâ”€â”€ extract
 
-&#x20;   │   └── read\_excel.py
+&#x20;   â”‚   â””â”€â”€ read\_excel.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── input\_files
+&#x20;   â”œâ”€â”€ input\_files
 
-&#x20;   │   ├── product\_master
+&#x20;   â”‚   â”œâ”€â”€ product\_master
 
-&#x20;   │   ├── location\_master
+&#x20;   â”‚   â”œâ”€â”€ location\_master
 
-&#x20;   │   ├── supplier\_master
+&#x20;   â”‚   â”œâ”€â”€ supplier\_master
 
-&#x20;   │   ├── sales
+&#x20;   â”‚   â”œâ”€â”€ sales
 
-&#x20;   │   ├── inventory\_snapshot
+&#x20;   â”‚   â”œâ”€â”€ inventory\_snapshot
 
-&#x20;   │   ├── inventory\_movement
+&#x20;   â”‚   â”œâ”€â”€ inventory\_movement
 
-&#x20;   │   ├── purchase\_orders
+&#x20;   â”‚   â”œâ”€â”€ purchase\_orders
 
-&#x20;   │   ├── goods\_receipts
+&#x20;   â”‚   â”œâ”€â”€ goods\_receipts
 
-&#x20;   │   ├── transfers
+&#x20;   â”‚   â”œâ”€â”€ transfers
 
-&#x20;   │   ├── forecast
+&#x20;   â”‚   â”œâ”€â”€ forecast
 
-&#x20;   │   └── stock\_optimization
+&#x20;   â”‚   â””â”€â”€ stock\_optimization
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── load
+&#x20;   â”œâ”€â”€ load
 
-&#x20;   │   ├── sql\_connection.py
+&#x20;   â”‚   â”œâ”€â”€ sql\_connection.py
 
-&#x20;   │   ├── staging\_loader.py
+&#x20;   â”‚   â”œâ”€â”€ staging\_loader.py
 
-&#x20;   │   └── dw\_loader.py
+&#x20;   â”‚   â””â”€â”€ dw\_loader.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── logs
+&#x20;   â”œâ”€â”€ logs
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── processed\_files
+&#x20;   â”œâ”€â”€ processed\_files
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── rejected\_files
+&#x20;   â”œâ”€â”€ rejected\_files
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── reports
+&#x20;   â”œâ”€â”€ reports
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── tests
+&#x20;   â”œâ”€â”€ tests
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── transform
+&#x20;   â”œâ”€â”€ transform
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── utils
+&#x20;   â”œâ”€â”€ utils
 
-&#x20;   │   ├── cli\_args.py
+&#x20;   â”‚   â”œâ”€â”€ cli\_args.py
 
-&#x20;   │   ├── error\_report\_exporter.py
+&#x20;   â”‚   â”œâ”€â”€ error\_report\_exporter.py
 
-&#x20;   │   ├── file\_mover.py
+&#x20;   â”‚   â”œâ”€â”€ file\_mover.py
 
-&#x20;   │   ├── generate\_sample\_excel\_files.py
+&#x20;   â”‚   â”œâ”€â”€ generate\_sample\_excel\_files.py
 
-&#x20;   │   ├── pipeline\_logger.py
+&#x20;   â”‚   â”œâ”€â”€ pipeline\_logger.py
 
-&#x20;   │   └── run\_summary\_report.py
+&#x20;   â”‚   â””â”€â”€ run\_summary\_report.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── validate
+&#x20;   â”œâ”€â”€ validate
 
-&#x20;   │   ├── data\_quality\_checks.py
+&#x20;   â”‚   â”œâ”€â”€ data\_quality\_checks.py
 
-&#x20;   │   ├── post\_load\_validation.py
+&#x20;   â”‚   â”œâ”€â”€ post\_load\_validation.py
 
-&#x20;   │   └── schema\_validation.py
+&#x20;   â”‚   â””â”€â”€ schema\_validation.py
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ├── main.py
+&#x20;   â”œâ”€â”€ main.py
 
-&#x20;   ├── requirements.txt
+&#x20;   â”œâ”€â”€ requirements.txt
 
-&#x20;   └── .env
+&#x20;   â””â”€â”€ .env
 
 ```
 
@@ -872,7 +959,7 @@ After successful ETL:
 
 ```text
 
-input\_files → processed\_files
+input\_files â†’ processed\_files
 
 ```
 
@@ -884,7 +971,7 @@ After failed validation:
 
 ```text
 
-input\_files → rejected\_files
+input\_files â†’ rejected\_files
 
 ```
 
@@ -1677,6 +1764,7 @@ Build 27: Documentation and GitHub cleanup
 Inventory Controller
 
 Retail, Supply Chain Analytics, Business Intelligence, and Data Warehouse Portfolio Project
+
 
 
 
