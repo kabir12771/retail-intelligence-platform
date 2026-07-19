@@ -1,0 +1,112 @@
+# ============================================================
+# Retail Intelligence Platform - Git Ignore Rules
+# ============================================================
+
+# ----------------------------
+# Python virtual environment
+# ----------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# ----------------------------
+# Python cache / compiled files
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ----------------------------
+# Environment / secrets
+# ----------------------------
+.env
+.env.*
+!.env.example
+
+# ----------------------------
+# IDE / editor files
+# ----------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------------
+# OS files
+# ----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----------------------------
+# Logs
+# ----------------------------
+logs/*
+!logs/.gitkeep
+*.log
+
+# ----------------------------
+# Generated reports
+# ----------------------------
+reports/*
+!reports/.gitkeep
+
+error_reports/*
+!error_reports/.gitkeep
+
+# ----------------------------
+# Processed and rejected source files
+# ----------------------------
+processed_files/*
+!processed_files/.gitkeep
+
+rejected_files/*
+!rejected_files/.gitkeep
+
+# ----------------------------
+# Input source data files
+# Keep folder structure, ignore actual data files
+# ----------------------------
+input_files/**/*.xlsx
+input_files/**/*.xls
+input_files/**/*.xlsm
+input_files/**/*.csv
+input_files/**/*.txt
+
+# ----------------------------
+# Excel temporary files
+# ----------------------------
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# ----------------------------
+# Database / local backup files
+# ----------------------------
+*.bak
+*.trn
+*.mdf
+*.ldf
+
+# ----------------------------
+# Large generated artifacts
+# ----------------------------
+*.zip
+*.7z
+*.rar
+
+# ----------------------------
+# Jupyter notebook checkpoints
+# ----------------------------
+.ipynb_checkpoints/
+
+# ----------------------------
+# Local test outputs
+# ----------------------------
+test_outputs/
+temp/
+tmp/
