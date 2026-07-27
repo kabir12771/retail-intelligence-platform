@@ -1,0 +1,214 @@
+-- Additional measures for the 'Stock Optimization' table
+
+Distinct Optimization Products =
+DISTINCTCOUNT ( 'Stock Optimization'[product_code] )
+
+Distinct Optimization Locations =
+DISTINCTCOUNT ( 'Stock Optimization'[location_code] )
+
+Total Optimization Items =
+COUNTROWS ( 'Stock Optimization' )
+
+Critical Stockout Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[recommendation] = "Critical stockout risk - replenish now"
+)
+
+Healthy Stock Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[inventory_health_score] >= 80
+)
+
+Healthy Inventory Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[inventory_health_score] >= 80
+)
+
+Monitor Inventory Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[inventory_health_score] >= 60,
+    'Stock Optimization'[inventory_health_score] < 80
+)
+
+Action Needed Inventory Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[inventory_health_score] < 60
+)
+
+Healthy Inventory % =
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( 'Stock Optimization' ),
+        'Stock Optimization'[inventory_health_score] >= 80
+    ),
+    COUNTROWS ( 'Stock Optimization' ),
+    0
+)
+
+Reorder Required % =
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( 'Stock Optimization' ),
+        'Stock Optimization'[recommended_order_qty] > 0
+    ),
+    COUNTROWS ( 'Stock Optimization' ),
+    0
+)
+
+Critical Stockout % =
+DIVIDE (
+    CALCULATE (
+        COUNTROWS ( 'Stock Optimization' ),
+        'Stock Optimization'[recommendation] = "Critical stockout risk - replenish now"
+    ),
+    COUNTROWS ( 'Stock Optimization' ),
+    0
+)
+
+Average Service Level % =
+AVERAGE ( 'Stock Optimization'[service_level] )
+
+Average Recommended Qty per Reorder Item =
+DIVIDE ( [Recommended Order Qty], [Reorder Required Items], 0 )
+
+-- Advanced demand and replenishment measures
+
+Lead Time Demand Qty =
+SUMX (
+    'Stock Optimization',
+    'Stock Optimization'[avg_daily_sales] * 'Stock Optimization'[lead_time_days]
+)
+
+Lead Time Demand Variability Qty =
+SUMX (
+    'Stock Optimization',
+    'Stock Optimization'[demand_std_dev]
+        * SQRT ( MAX ( 'Stock Optimization'[lead_time_days], 0 ) )
+)
+
+Average Demand Variability % =
+AVERAGEX (
+    FILTER ( 'Stock Optimization', 'Stock Optimization'[avg_daily_sales] > 0 ),
+    DIVIDE (
+        'Stock Optimization'[demand_std_dev],
+        'Stock Optimization'[avg_daily_sales],
+        0
+    )
+)
+
+Safety Stock to Lead Time Demand % =
+DIVIDE (
+    SUM ( 'Stock Optimization'[safety_stock_qty] ),
+    [Lead Time Demand Qty],
+    0
+)
+
+Reorder Point Coverage % =
+DIVIDE (
+    SUM ( 'Stock Optimization'[reorder_point_qty] ),
+    [Lead Time Demand Qty],
+    0
+)
+
+Estimated Replenishment Days =
+DIVIDE (
+    SUM ( 'Stock Optimization'[recommended_order_qty] ),
+    SUM ( 'Stock Optimization'[avg_daily_sales] ),
+    0
+)
+
+-- Advanced risk counts
+
+Lead Time Exposure Items =
+COUNTROWS (
+    FILTER (
+        'Stock Optimization',
+        'Stock Optimization'[stock_cover_days]
+            < 'Stock Optimization'[lead_time_days]
+    )
+)
+
+High Variability Items =
+COUNTROWS (
+    FILTER (
+        'Stock Optimization',
+        'Stock Optimization'[avg_daily_sales] > 0
+            && DIVIDE (
+                'Stock Optimization'[demand_std_dev],
+                'Stock Optimization'[avg_daily_sales],
+                0
+            ) >= 0.50
+    )
+)
+
+Long Lead Time Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[lead_time_days] > 30
+)
+
+Critical A-Class Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[abc_class] = "A",
+    'Stock Optimization'[recommendation] = "Critical stockout risk - replenish now"
+)
+
+High Priority Replenishment Items =
+COUNTROWS (
+    FILTER (
+        'Stock Optimization',
+        'Stock Optimization'[recommended_order_qty] > 0
+            && (
+                'Stock Optimization'[inventory_health_score] < 60
+                    || 'Stock Optimization'[abc_class] = "A"
+            )
+    )
+)
+
+Lead Time Exposure % =
+DIVIDE ( [Lead Time Exposure Items], [Total Optimization Items], 0 )
+
+-- Conditional KPI and formatting measures
+
+Optimization Risk Score =
+VAR CriticalRate = DIVIDE ( [Critical Stockout Items], [Total Optimization Items], 0 )
+VAR ActionRate = DIVIDE ( [Action Needed Inventory Items], [Total Optimization Items], 0 )
+VAR ExposureRate = DIVIDE ( [Lead Time Exposure Items], [Total Optimization Items], 0 )
+RETURN
+    MIN ( 100, 100 * ( 0.50 * CriticalRate + 0.30 * ActionRate + 0.20 * ExposureRate ) )
+
+Optimization Risk Status =
+SWITCH (
+    TRUE (),
+    [Optimization Risk Score] >= 40, "Critical",
+    [Optimization Risk Score] >= 20, "High",
+    [Optimization Risk Score] >= 10, "Monitor",
+    "Healthy"
+)
+
+Optimization Risk Color =
+SWITCH (
+    [Optimization Risk Status],
+    "Critical", "#B91C1C",
+    "High", "#EA580C",
+    "Monitor", "#F59E0B",
+    "#16A34A"
+)
+
+Replenishment Alert =
+SWITCH (
+    TRUE (),
+    [Critical Stockout Items] > 0,
+        FORMAT ( [Critical Stockout Items], "#,0" ) & " critical stockout items require immediate action",
+    [High Priority Replenishment Items] > 0,
+        FORMAT ( [High Priority Replenishment Items], "#,0" ) & " high-priority items require replenishment",
+    [Lead Time Exposure Items] > 0,
+        FORMAT ( [Lead Time Exposure Items], "#,0" ) & " items have stock cover below lead time",
+    "Stock optimization indicators are healthy"
+)

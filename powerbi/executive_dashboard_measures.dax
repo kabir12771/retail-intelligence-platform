@@ -159,6 +159,31 @@ SWITCH (
 )
 
 
+Critical Stockout Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[recommendation] = "Critical stockout risk - replenish now"
+)
+
+
+Reorder Urgently Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[recommendation] = "Reorder urgently / transfer from warehouse"
+)
+
+
+Monitor Overstock Risk Items =
+CALCULATE (
+    COUNTROWS ( 'Stock Optimization' ),
+    'Stock Optimization'[recommendation] = "Monitor overstock risk"
+)
+
+
+Total Optimization Items =
+COUNTROWS ( 'Stock Optimization' )
+
+
 -- =========================
 -- 5. EXECUTIVE KPI MEASURES
 -- =========================

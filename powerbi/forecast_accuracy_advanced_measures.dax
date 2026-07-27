@@ -1,0 +1,156 @@
+-- Advanced measures for the 'Forecast Accuracy' table
+
+Total Forecast Records =
+COUNTROWS ( 'Forecast Accuracy' )
+
+Distinct Forecast Products =
+DISTINCTCOUNT ( 'Forecast Accuracy'[product_code] )
+
+Forecast Error Qty =
+SUMX (
+    'Forecast Accuracy',
+    'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty]
+)
+
+Forecast Bias % =
+DIVIDE ( [Forecast Error Qty], [Actual Qty], 0 )
+
+MAE Qty =
+AVERAGEX (
+    'Forecast Accuracy',
+    ABS ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty] )
+)
+
+RMSE Qty =
+SQRT (
+    AVERAGEX (
+        'Forecast Accuracy',
+        POWER ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty], 2 )
+    )
+)
+
+Normalized RMSE % =
+DIVIDE (
+    [RMSE Qty],
+    AVERAGE ( 'Forecast Accuracy'[actual_qty] ),
+    0
+)
+
+MAPE Excluding Zero % =
+AVERAGEX (
+    FILTER ( 'Forecast Accuracy', 'Forecast Accuracy'[actual_qty] <> 0 ),
+    DIVIDE (
+        ABS ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty] ),
+        ABS ( 'Forecast Accuracy'[actual_qty] )
+    )
+)
+
+Median Absolute Percentage Error % =
+MEDIANX (
+    FILTER ( 'Forecast Accuracy', 'Forecast Accuracy'[actual_qty] <> 0 ),
+    DIVIDE (
+        ABS ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty] ),
+        ABS ( 'Forecast Accuracy'[actual_qty] )
+    )
+)
+
+Forecast Accuracy Capped % =
+MAX ( 0, 1 - [WAPE %] )
+
+Over Forecast Qty =
+SUMX (
+    'Forecast Accuracy',
+    MAX ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty], 0 )
+)
+
+Under Forecast Qty =
+SUMX (
+    'Forecast Accuracy',
+    MAX ( 'Forecast Accuracy'[actual_qty] - 'Forecast Accuracy'[forecast_qty], 0 )
+)
+
+Over Forecast Records =
+COUNTROWS (
+    FILTER (
+        'Forecast Accuracy',
+        'Forecast Accuracy'[forecast_qty] > 'Forecast Accuracy'[actual_qty]
+    )
+)
+
+Under Forecast Records =
+COUNTROWS (
+    FILTER (
+        'Forecast Accuracy',
+        'Forecast Accuracy'[forecast_qty] < 'Forecast Accuracy'[actual_qty]
+    )
+)
+
+Within 10% Tolerance Records =
+COUNTROWS (
+    FILTER (
+        'Forecast Accuracy',
+        'Forecast Accuracy'[actual_qty] <> 0
+            && DIVIDE (
+                ABS ( 'Forecast Accuracy'[forecast_qty] - 'Forecast Accuracy'[actual_qty] ),
+                ABS ( 'Forecast Accuracy'[actual_qty] )
+            ) <= 0.10
+    )
+)
+
+Within 10% Tolerance % =
+DIVIDE (
+    [Within 10% Tolerance Records],
+    COUNTROWS (
+        FILTER ( 'Forecast Accuracy', 'Forecast Accuracy'[actual_qty] <> 0 )
+    ),
+    0
+)
+
+Forecast Tracking Signal =
+DIVIDE ( [Forecast Error Qty], [MAE Qty], 0 )
+
+-- Conditional KPI measures
+
+Forecast Performance Status =
+SWITCH (
+    TRUE (),
+    [Forecast Accuracy Capped %] >= 0.85, "Healthy",
+    [Forecast Accuracy Capped %] >= 0.70, "Monitor",
+    "Action Needed"
+)
+
+Forecast Performance Color =
+SWITCH (
+    [Forecast Performance Status],
+    "Healthy", "#16A34A",
+    "Monitor", "#F59E0B",
+    "#DC2626"
+)
+
+Forecast Bias Status =
+SWITCH (
+    TRUE (),
+    [Forecast Bias %] > 0.05, "Over Forecasting",
+    [Forecast Bias %] < -0.05, "Under Forecasting",
+    "Balanced"
+)
+
+Forecast Bias Color =
+SWITCH (
+    [Forecast Bias Status],
+    "Balanced", "#16A34A",
+    "Over Forecasting", "#2563EB",
+    "#DC2626"
+)
+
+Forecast Alert =
+SWITCH (
+    TRUE (),
+    [Forecast Accuracy Capped %] < 0.70,
+        "Forecast accuracy requires immediate action",
+    ABS ( [Forecast Bias %] ) > 0.10,
+        "Material forecast bias detected: " & [Forecast Bias Status],
+    [Within 10% Tolerance %] < 0.50,
+        "Fewer than half of forecasts are within 10% tolerance",
+    "Forecast performance is within acceptable limits"
+)
