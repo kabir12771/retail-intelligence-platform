@@ -229,7 +229,7 @@ FROM final_calc;
     SELECT
         p.product_key,
         l.location_key,
-        20260704 AS optimization_run_date_key,
+        20260711 AS optimization_run_date_key,
         CAST(1 + ((p.product_key + l.location_key) % 3) AS INT) AS optimization_model_key,
         CAST(0.5 + ((p.product_key + l.location_key) % 8) * 0.35 AS DECIMAL(18, 2)) AS avg_daily_sales,
         CAST(0.2 + ((p.product_key + l.location_key) % 5) * 0.20 AS DECIMAL(18, 2)) AS demand_std_dev,
